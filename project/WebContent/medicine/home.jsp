@@ -85,7 +85,6 @@
 	<h6>Administrator Page</h6>	
 	</div>
 	
-	
 	<div id="Nwagon"></div>
 	
 </div>
