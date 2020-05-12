@@ -70,7 +70,7 @@
 		<li class="nav-item"><a class="nav-link menuitem"
 			id="profile-tab" data-toggle="tab" href="#profile" role="tab"
 			aria-controls="profile" aria-selected="false"> 사용자 정보 관리 </a></li>
-		<li class="nav-item"><a class="nav-link menuitem"
+		<li class="nav-item"><a class="nav-link menuitem"     
 			id="messages-tab" data-toggle="tab" href="#messages" role="tab"
 			aria-controls="messages" aria-selected="false"> 의약품 정보 관리 </a></li>
 		<li class="nav-item"><a class="nav-link menuitem"
