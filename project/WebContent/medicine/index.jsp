@@ -1,9 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
+<%@page import="medicine.*"%>
+
+<jsp:useBean id="dao" scope="application" class="medicine.TestDB" />
+	
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css"
@@ -93,7 +98,7 @@ width:180; height:180
 		crossorigin="anonymous"></script>
 		<script type="text/javascript">
     
-        // ÇÊ¼ö ÀÔ·ÂÁ¤º¸ÀÎ ¾ÆÀÌµğ, ºñ¹Ğ¹øÈ£°¡ ÀÔ·ÂµÇ¾ú´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+        // í•„ìˆ˜ ì…ë ¥ì •ë³´ì¸ ì•„ì´ë””, ë¹„ë°€ë²ˆí˜¸ê°€ ì…ë ¥ë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
         function checkValue()
         {
             if(!document.userInfo.id.value){
@@ -104,9 +109,9 @@ width:180; height:180
                 return false;
             }
             
-            // ºñ¹Ğ¹øÈ£¿Í ºñ¹Ğ¹øÈ£ È®ÀÎ¿¡ ÀÔ·ÂµÈ °ªÀÌ µ¿ÀÏÇÑÁö È®ÀÎ
+            // ë¹„ë°€ë²ˆí˜¸ì™€ ë¹„ë°€ë²ˆí˜¸ í™•ì¸ì— ì…ë ¥ëœ ê°’ì´ ë™ì¼í•œì§€ í™•ì¸
             if(document.userInfo.password.value != document.userInfo.passwordcheck.value ){
-                alert("·Î±×ÀÎ½ÇÆĞ!");
+                alert("ë¡œê·¸ì¸ì‹¤íŒ¨!");
                 return false;
             }
         }
@@ -115,7 +120,7 @@ width:180; height:180
 
 	<div class="top">
 		<img alt="logo" src="img/logo.png" class="logo">
-		<h3 class="title">Medicine Box °ü¸®ÀÚ ÆäÀÌÁö</h3>
+		<h3 class="title">Medicine Box ê´€ë¦¬ì í˜ì´ì§€</h3>
 	</div>
 	
 	<form method="post" id="autoForm" action="../pro/JoinPro.jsp" target="_self">
