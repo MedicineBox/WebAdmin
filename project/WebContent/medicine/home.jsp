@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+<%
+String id ="";
+try {
+	id = (String)session.getAttribute("id");
+	
+	if (id != null) {
+		
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,62 +46,62 @@
 .menuitem {
 	color: white;
 }
+.admin {
+	margin-left: 70%;
+}
+.logout {
+}
 </style>
 
 </head>
 <body>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
-		<head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript">
+    // 로그아웃 담당 JSP로 이동
+    function logoutPro(){
+        location.href="logout.jsp";
+    }
+</script>
+
 	<!-- Nav tabs -->
 	<div>
 		<img alt="logo" src="img/medicinebox.png" class="logo">
+		<label class="admin"><%=id %>님</label>
+		<input type="button" class="btn btn-secondary logout" value="로그아웃" onclick="logoutPro()">
 	</div>
-	<ul class="nav nav-tabs flex-column menu" id="myTab" role="tablist"
-		style="padding: 0px;">
-		<li class="nav-item" style="margin-top: 10px;"><a
-			class="nav-link active menuitem" id="home-tab" data-toggle="tab"
-			href="#home" role="tab" aria-controls="home" aria-selected="true">
-				관리자 페이지 </a></li>
-		<li class="nav-item"><a class="nav-link menuitem"
-			id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-			aria-controls="profile" aria-selected="false"> 사용자 정보 관리 </a></li>
-		<li class="nav-item"><a class="nav-link menuitem"     
-			id="messages-tab" data-toggle="tab" href="#messages" role="tab"
-			aria-controls="messages" aria-selected="false"> 의약품 정보 관리 </a></li>
-		<li class="nav-item"><a class="nav-link menuitem"
-			id="settings-tab" data-toggle="tab" href="#settings" role="tab"
-			aria-controls="settings" aria-selected="false"> 사용자 검색어 조회 </a></li>
+	<ul class="nav nav-tabs flex-column menu" id="myTab" role="tablist" style="padding: 0px;">
+		<li class="nav-item" style="margin-top: 10px;">
+			<a class="nav-link active menuitem" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+				관리자 페이지
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link menuitem" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+				사용자 정보 관리
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link menuitem" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">
+				의약품 정보 관리
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link menuitem" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">
+				사용자 검색어 조회
+			</a>
+		</li>
 	</ul>
-<div class="admin" stlye="width: 65%; height:150px; border:1px solid green; float: right;">
-	<div calss="korean" style="float:left;">
-		<h3>관리자용 페이지</h3>
-	</div>
-	<div class="english" >
-	<h6>Administrator Page</h6>	
-	</div>
-	
-	
-	<div id="Nwagon"></div>
-	
-</div>
+
 	<!-- Tab panes -->
 	<div class="tab-content content">
-		<div class="tab-pane active" id="home" role="tabpanel"
-			aria-labelledby="home-tab"></div>
+		
+		<!-- 데이터 시각화 -->
+		<jsp:include page="inc_chart.jsp" flush="false" />
 
 		<!-- 사용자 정보 관리 -->
 		<jsp:include page="inc_user.jsp" flush="false" />
@@ -106,3 +115,12 @@
 
 </body>
 </html>
+
+<% 
+	} else {
+		response.sendRedirect("index.jsp");
+	}
+}catch(Exception e){
+	e.printStackTrace();
+}
+%>

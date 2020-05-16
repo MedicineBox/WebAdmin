@@ -4,11 +4,11 @@
 
 <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
 	<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-		<div class="page-header">
-			<h2>검색어 목록</h2>
-		</div>
-		<br>
-		<h6>사용자의 검색어 중 DB에 없어 API를 이용하여 검색된 리스트입니다.<br>DB에 의약품 정보를 추가해 주세요.</h6>
+		
+		<nav class="navbar">
+			<a class="navbar-brand">검색어 목록</a>
+		</nav>
+		<h6>사용자의 검색어 중 DB에 없어 API를 이용하여 검색된 리스트입니다.DB에 의약품 정보를 추가해 주세요.</h6>
 		<br>
 		
 		<table class="table table-hover">

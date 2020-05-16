@@ -3,7 +3,7 @@
 	
 <%@page import="medicine.*"%>
 
-<jsp:useBean id="dao" scope="application" class="medicine.TestDB" />
+<jsp:useBean id="admin" scope="application" class="medicine.DBConnect" />
 	
 <!DOCTYPE html>
 <html>
@@ -21,11 +21,10 @@
 }
 
 .logo {
-	width: 25%;
+	width: 20%;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	margin-left: auto;
 }
 
 .title {
@@ -79,6 +78,20 @@ width:180; height:180
     background-color: #4BBF6A;
 }
 
+.logintable {
+	width: 300px;
+	padding: 0;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid black;
+}
+.loginbtn {
+	height: 95px;
+	margin-top: -73px;
+	margin-left: 10px;
+	vertical-align: middle;
+}
 </style>
 
 </head>
@@ -96,7 +109,7 @@ width:180; height:180
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
     
         // 필수 입력정보인 아이디, 비밀번호가 입력되었는지 확인하는 함수
         function checkValue()
@@ -121,24 +134,47 @@ width:180; height:180
 	<div class="top">
 		<img alt="logo" src="img/logo.png" class="logo">
 		<h3 class="title">Medicine Box 관리자 페이지</h3>
+		<br>
 	</div>
 	
-	<form method="post" id="autoForm" action="../pro/JoinPro.jsp" target="_self">
-	<a href=#home></a>
+	<form method="post" id="autoForm" action="admin_control.jsp?action=login" target="_self">
+		<a href=#home></a>
 		<input type=hidden name="redirectUrl" value="">
 		<fieldset>
-		 <div class="box_login">
-		  <div class="inp_text">
-		   <input type="text" id="loginId" name="loginId" placeholder="ID" >
-		  </div>
-		  <div class="inp_text">
-		   <input type="password" id="loginPw" name="password" placeholder="PASSWORD">
-		  </div>
-		   <button type="submit" class="btn_login">LOGIN</button>
-		 </div>
+			<div class="box_login">
+				<div class="inp_text">
+					<input type="text" id="loginId" name="loginId" placeholder="ID" >
+				</div>
+				<div class="inp_text">
+					<input type="password" id="loginPw" name="loginPw" placeholder="PASSWORD">
+				</div>
+				<input type="submit" class="btn_login" value="LOGIN">
+			</div>
 		</fieldset>
 	</form>
 	
+	<!-- <table class="logintable">
+		<tr>
+			<td>
+				<div class="form-group">
+					<label for="userid" class="sr-only">아이디</label>
+					<input type="text" name="id" id="id" class="form-control inputword" placeholder="아이디" required autofocus style="outline:none">
+				</div>
+			</td>
+			<td rowspan="2"></td>
+		</tr>
+		<tr>
+			<td>
+				<div class="form-group">
+					<label for="passwd" class="sr-only">비밀번호</label>
+					<input type="password" name="passwd" id="passwd" class="form-control inputword" placeholder="비밀번호" required>
+				</div>
+			</td>
+			<td>
+				<button class="btn btn-success btn-block btn-lg loginbtn">LOGIN</button>
+			</td>
+		</tr>
+	</table> -->
  
 </body>
 </html>
