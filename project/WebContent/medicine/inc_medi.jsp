@@ -13,7 +13,7 @@
 }
 </style>
 
-<div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+<div class="tab-pane" id="medi" role="tabpanel" aria-labelledby="medi-tab">
 	<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 		<nav class="navbar">
 			<a class="navbar-brand">의약품 목록

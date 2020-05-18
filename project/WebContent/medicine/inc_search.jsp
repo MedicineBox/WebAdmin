@@ -2,56 +2,54 @@
     pageEncoding="UTF-8"%>
 
 
-<div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-	<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+<div class="tab-pane" id="search" role="tabpanel" aria-labelledby="search-tab">
 		
-		<nav class="navbar">
-			<a class="navbar-brand">검색어 목록</a>
-		</nav>
-		<h6>사용자의 검색어 중 DB에 없어 API를 이용하여 검색된 리스트입니다.DB에 의약품 정보를 추가해 주세요.</h6>
-		<br>
-		
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">사진</th>
-					<th scope="col">의약품명</th>
-					<th scope="col">보관</th>
-					<th scope="col">검색</th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">2</th>
-					<td><img alt="" src="img/alt.png" class="medicineimg"></td>
-					<td>루테인</td>
-					<td>3회</td>
-					<td>3회</td>
-					<td><input type="submit" class="btn btn-outline-success" value="추가" data-target="#addModal" data-toggle="modal"></td>
-				</tr>
-				<tr>
-					<th scope="row">1</th>
-					<td><img alt="p2" src="img/alt.png" class="medicineimg"></td>
-					<td>미네랄 영양제</td>
-					<td>1회</td>
-					<td>7회</td>
-					<td><input type="submit" class="btn btn-outline-success" value="추가" data-target="#addModal" data-toggle="modal"></td>
-				</tr>
-			</tbody>
-		</table>
-		
-		<!-- 
-		<ul class="pagination justify-content-center">
-			<li class="page-item disabled"><a class="page-link" href="#"><</a></li>
-			<li class="page-item"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">2</a></li>
-			<li class="page-item"><a class="page-link" href="#">3</a></li>
-			<li class="page-item"><a class="page-link" href="#">></a></li>
-		</ul>
-		-->
-	</div>
+	<nav class="navbar">
+		<a class="navbar-brand">검색어 목록</a>
+	</nav>
+	<h6>사용자의 검색어 중 DB에 없어 API를 이용하여 검색된 리스트입니다.DB에 의약품 정보를 추가해 주세요.</h6>
+	<br>
+	
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">사진</th>
+				<th scope="col">의약품명</th>
+				<th scope="col">보관</th>
+				<th scope="col">검색</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">2</th>
+				<td><img alt="" src="img/alt.png" class="medicineimg"></td>
+				<td>루테인</td>
+				<td>3회</td>
+				<td>3회</td>
+				<td><input type="submit" class="btn btn-outline-success" value="추가" data-target="#addModal" data-toggle="modal"></td>
+			</tr>
+			<tr>
+				<th scope="row">1</th>
+				<td><img alt="p2" src="img/alt.png" class="medicineimg"></td>
+				<td>미네랄 영양제</td>
+				<td>1회</td>
+				<td>7회</td>
+				<td><input type="submit" class="btn btn-outline-success" value="추가" data-target="#addModal" data-toggle="modal"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<!-- 
+	<ul class="pagination justify-content-center">
+		<li class="page-item disabled"><a class="page-link" href="#"><</a></li>
+		<li class="page-item"><a class="page-link" href="#">1</a></li>
+		<li class="page-item"><a class="page-link" href="#">2</a></li>
+		<li class="page-item"><a class="page-link" href="#">3</a></li>
+		<li class="page-item"><a class="page-link" href="#">></a></li>
+	</ul>
+	-->
 </div>
 
 <!-- 의약품 정보 추가 모달 -->

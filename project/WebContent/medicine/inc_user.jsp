@@ -7,7 +7,7 @@
 }
 </style>
 
-<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+<div class="tab-pane" id="user" role="tabpanel" aria-labelledby="user-tab">
 	<nav class="navbar">
 		<a class="navbar-brand">사용자 목록</a>
 		<form class="form-inline">

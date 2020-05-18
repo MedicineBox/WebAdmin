@@ -46,10 +46,14 @@ try {
 .menuitem {
 	color: white;
 }
+
 .admin {
 	margin-left: 70%;
 }
-.logout {
+
+.navbar {
+	padding-left: 0px;
+	padding-right: 0px;
 }
 </style>
 
@@ -72,27 +76,32 @@ try {
 	<div>
 		<img alt="logo" src="img/medicinebox.png" class="logo">
 		<label class="admin"><%=id %>님</label>
-		<input type="button" class="btn btn-secondary logout" value="로그아웃" onclick="logoutPro()">
+		<input type="button" class="btn btn-secondary" value="로그아웃" onclick="logoutPro()">
 	</div>
 	<ul class="nav nav-tabs flex-column menu" id="myTab" role="tablist" style="padding: 0px;">
 		<li class="nav-item" style="margin-top: 10px;">
-			<a class="nav-link active menuitem" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
-				관리자 페이지
+			<a class="nav-link active menuitem" id="chart-tab" data-toggle="tab" href="#chart" role="tab" aria-controls="chart" aria-selected="true">
+				데이터 시각화
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link menuitem" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+			<a class="nav-link menuitem" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false">
 				사용자 정보 관리
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link menuitem" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">
+			<a class="nav-link menuitem" id="medi-tab" data-toggle="tab" href="#medi" role="tab" aria-controls="medi" aria-selected="false">
 				의약품 정보 관리
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link menuitem" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">
+			<a class="nav-link menuitem" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search" aria-selected="false">
 				사용자 검색어 조회
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link menuitem" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting" aria-selected="false">
+				비밀번호 변경
 			</a>
 		</li>
 	</ul>
@@ -111,6 +120,9 @@ try {
 
 		<!-- 사용자 검색어 조회 -->
 		<jsp:include page="inc_search.jsp" flush="false" />
+		
+		<!-- 비밀번호 변경 -->
+		<jsp:include page="inc_setting.jsp" flush="false" />
 	</div>
 
 </body>
