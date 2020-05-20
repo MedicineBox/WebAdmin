@@ -78,7 +78,7 @@ try {
 		<label class="admin"><%=id %>님</label>
 		<input type="button" class="btn btn-secondary" value="로그아웃" onclick="logoutPro()">
 	</div>
-	<ul class="nav nav-tabs flex-column menu" id="myTab" role="tablist" style="padding: 0px;">
+	<ul class="nav nav-tabs flex-column menu" id="myTab" role="tablist" style="padding: 0px; background-color: #4BBF6A;">
 		<li class="nav-item" style="margin-top: 10px;">
 			<a class="nav-link active menuitem" id="chart-tab" data-toggle="tab" href="#chart" role="tab" aria-controls="chart" aria-selected="true">
 				데이터 시각화
