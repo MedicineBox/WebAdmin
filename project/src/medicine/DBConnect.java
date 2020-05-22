@@ -32,7 +32,7 @@ public class DBConnect {
 	}
 
 		
-	// DB close
+	/// DB close
 	void disconnect() {
 		// null 泥댄겕瑜� �븯怨� close
 		if(pstmt != null) {
