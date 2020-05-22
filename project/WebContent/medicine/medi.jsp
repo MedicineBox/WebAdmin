@@ -63,7 +63,7 @@ try {
     cPage = 1;
 }
 
-int totalRows = medi.getTotalRows();
+int totalRows = medi.getMediTotalRows();
 
 int len = 5;
 int totalPages = totalRows % len == 0 ? totalRows / len : (totalRows / len) + 1;

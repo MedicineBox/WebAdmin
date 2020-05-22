@@ -69,7 +69,7 @@ try {
     cPage = 1;
 }
 
-int totalRows = medi.getTotalRows();
+int totalRows = medi.getUserTotalRows();
 
 int len = 5;
 int totalPages = totalRows % len == 0 ? totalRows / len : (totalRows / len) + 1;
@@ -82,7 +82,7 @@ if (cPage > totalPages) {
 int start = (cPage - 1) * 5;
 int end = cPage * 5;
 
-ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
+ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 %>
 
 <div class="main">
@@ -112,6 +112,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 						<th scope="col">비밀번호</th>
 						<th scope="col">휴대폰 번호</th>
 						<th scope="col">디바이스 일련번호</th>
+						<th scope="col">알림설정</th>
 						<th scope="col"></th>
 					</tr>
 				</thead>
@@ -119,16 +120,15 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 				<%
 	          if (datas.size() != 0) {
 	        	  
-					for(Medi me : (ArrayList<Medi>) datas) {
+					for(User us : (ArrayList<User>) datas) {
 					%>
 					<tr>
-						<td scope="row" id="num"><%=me.getMedi_num()%></td>
-						<td><img src="img/<%=me.getMedi_photo()%>" id="photo" class="medicineimg"></td>			
-						<td id="name"><%=me.getMedi_name() %></td>
-						<td id="effect" style="display: none;"><%=me.getMedi_effect() %></td>
-						<td id="use" style="display: none;"><%=me.getMedi_use() %></td>
-						<td id="store"><%=me.getMedi_store() %>회</td>
-						<td id="search"><%=me.getMedi_search() %>회</td>
+						<td scope="row" id="id"><%=us.getUser_id()%></td>		
+						<td id="name"><%=us.getUser_name() %></td>
+						<td id="pwd"><%=us.getUser_pwd() %></td>
+						<td id="phone"><%=us.getUser_phone() %></td>
+						<td id="device"><%=us.getUser_device() %></td>
+						<td id="alarm"><%=us.getUser_alarm() %></td>
 						<td><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=me.getMedi_num()%>,'<%=me.getMedi_name() %>','img/<%=me.getMedi_photo()%>','<%=me.getMedi_effect() %>','<%=me.getMedi_use() %>')" data-target="#updateModal" data-toggle="modal"></td>
 					</tr>
 					<%
