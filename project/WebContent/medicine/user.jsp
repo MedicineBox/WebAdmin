@@ -129,7 +129,7 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 						<td id="phone"><%=us.getUser_phone() %></td>
 						<td id="device"><%=us.getUser_device() %></td>
 						<td id="alarm"><%=us.getUser_alarm() %></td>
-						<td><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=me.getMedi_num()%>,'<%=me.getMedi_name() %>','img/<%=me.getMedi_photo()%>','<%=me.getMedi_effect() %>','<%=me.getMedi_use() %>')" data-target="#updateModal" data-toggle="modal"></td>
+						<td><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction('<%=us.getUser_id()%>','<%=us.getUser_name() %>','<%=us.getUser_pwd() %>','<%=us.getUser_phone() %>','<%=us.getUser_device() %>',<%=us.getUser_alarm() %>)" data-target="#userModal" data-toggle="modal"></td>
 					</tr>
 					<%
 					}
@@ -229,23 +229,27 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 				<div class="modal-body">
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">아이디</label>
-						<input type="text" class="form-control col-sm-8" id="ps_title" name="ps_title">
+						<input type="text" class="form-control col-sm-8" id="user_id" name="user_id" readonly>
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">이름</label>
-						<input type="text" class="form-control col-sm-8" id="ps_title" name="ps_title">
+						<input type="text" class="form-control col-sm-8" id="user_name" name="user_name">
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">비밀번호</label>
-						<input type="text" class="form-control col-sm-8" id="ps_title" name="ps_title">
+						<input type="text" class="form-control col-sm-8" id="user_pwd" name="user_pwd">
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">휴대폰 번호</label>
-						<input type="text" class="form-control col-sm-8" id="ps_title" name="ps_title">
+						<input type="text" class="form-control col-sm-8" id="user_phone" name="user_phone">
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">디바이스 일련번호</label>
-						<input type="text" class="form-control col-sm-8" id="ps_title" name="ps_title">
+						<input type="text" class="form-control col-sm-8" id="user_device" name="user_device">
+					</div>
+					<div class="form-group row">
+						<label for="ps_title" class="col-sm-3 col-form-label">알림설정</label>
+						<input type="text" class="form-control col-sm-8" id="user_alarm" name="user_alarm">
 					</div>
 				</div>
 				
@@ -258,6 +262,34 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 	</div>
 </form>
 
+<script>
+//수정 모달창으로 값 넘겨주기
+function editFunction(id, name, pwd, phone, device, alarm) {	
+	var id = id;
+	var name = name;
+	var pwd = pwd;
+	var phone = phone;
+	var device = device;
+	var alarm = alarm;
+	
+	//var result = effect.replace(/(\n|\r\n)/g, '<br>');
+	/* var name = document.getElementById("name").childNodes[0].nodeValue;
+	var effect = document.getElementById("effect").childNodes[0].nodeValue;
+	var use = document.getElementById("use").childNodes[0].nodeValue;
+	var photo = document.getElementById("photo").getAttribute('src'); */
+	
+	console.log(id, name, pwd, device, alarm);
+	
+	$("#user_id").val(id);
+	$("#user_name").val(name);
+	$("#user_pwd").val(pwd);
+	$("#user_phone").val(phone);
+	$("#user_device").val(device);
+	$("#user_alarm").val(alarm);
+	
+	
+}
+</script>
 </body>
 </html>
 

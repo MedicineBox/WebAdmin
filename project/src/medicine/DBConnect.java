@@ -7,9 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import gjavaweb.addrbook.AddrBook;
 import medicine.Medi;
+import medicine.User;
 
 public class DBConnect {
 	
