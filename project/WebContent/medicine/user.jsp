@@ -215,7 +215,7 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 </div>
 
 <!-- 사용자 정보 수정 모달 -->
-<form method="post" action="userupdate.jsp">
+<form method="post" action="admin_control.jsp?action=userupdate">
 	<div class="modal fade" role="dialog" id="userModal" tabindex="-1">
 		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<div class="modal-content">

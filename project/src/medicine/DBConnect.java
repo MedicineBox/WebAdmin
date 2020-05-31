@@ -10,7 +10,7 @@ import java.util.List;
 import medicine.Medi;
 import medicine.User;
 
-public class DBConnect {
+public class DBConnect<Search> {
 	
 	private static Connection conn;
 	private static PreparedStatement pstmt;
@@ -51,7 +51,7 @@ public class DBConnect {
 		}
 	}
 
-	// 濡쒓렇�씤
+	// 로그인 확인
 	public int loginCheck(String id, String pw) {
 		connect();
 		
@@ -86,7 +86,7 @@ public class DBConnect {
 		return x;
 	}
 	
-	//鍮꾨쾲 蹂�寃� �쟾 鍮꾨쾲 泥댄겕
+	//비밀번호 확인
 	public int passwdCheck(String id, String oldPw) {
 		connect();
 		
@@ -119,7 +119,7 @@ public class DBConnect {
 		return x;
 	}
 	
-	//鍮꾨쾲 蹂�寃�
+	//비밀번호 수정
 	public boolean passwdEdit(String id, String newPw) {
 		connect();
 		
@@ -200,7 +200,7 @@ public class DBConnect {
 		return datas;
 	}
 	
-	// �쓽�빟�뭹 異붽�
+	// �의약품 수정
 	public boolean insertMedi(String name, String photo, String effect, String use) {
 		connect();
 		
@@ -223,7 +223,7 @@ public class DBConnect {
 	}
 	
 	
-	// �쓽�빟�뭹 �럹�씠吏� �쐞�븳 媛��닔 議고쉶
+	// 의약품 전체 로우 수 
 	public int getMediTotalRows() {
 		connect();
 		
@@ -248,7 +248,7 @@ public class DBConnect {
 		return count;
 	}
 	
-	// �쓽�빟�뭹 �쟾泥� 議고쉶
+	// �의약품 리스트
 	public List<Medi> getMediList(int start, int end){
 		List<Medi> datas = new ArrayList<>();
 		connect();
@@ -318,4 +318,88 @@ public class DBConnect {
 		}
 		return medi;
 	}
+	
+	// 사용자정보수정
+	public boolean updateUser(String id, String name, String pwd, String phone, String device, String alarm) {
+		connect();
+		
+		String sql = "UPDATE user SET user_name=?, user_pwd=?, user_phone=?, user_device=?, user_alarm=? WHERE user_id=?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, pwd);
+			pstmt.setString(3, phone);
+			pstmt.setString(4, device);
+			pstmt.setString(5, alarm);
+			pstmt.setString(6, id);
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			return false;
+		} finally {
+			disconnect();
+		}
+		return true;
+	}
+	
+	// 검색어 전체 로우 수
+	public int getNoneTotalRows() {
+		connect();
+		
+		int count = 0;
+		
+		String sql = "select count(none_num) from none";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				count = rs.getInt("count(none_num)");
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return count;
+	}
+	
+	//전체 검색어 정보 리스트
+	public List<None> getNoneList(int start, int end){
+		List<None> datas = new ArrayList<>();
+		connect();
+		
+		String sql = "select * from none limit ?, ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				None none = new None();
+				
+				none.setNone_num(rs.getInt("none_num"));
+				none.setNone_name(rs.getString("none_name"));
+				none.setNone_store(rs.getInt("none_store"));
+				none.setNone_search(rs.getInt("none_search"));
+				
+				
+				datas.add(none);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			disconnect();
+		}
+		return datas;
+	}
+	
 }

@@ -131,13 +131,40 @@ else if (action.equals("mediAdd")) {
 
 }
 
-// 의약품 수정
-else if (action.equals("mediEdit")) {
-	int num = Integer.parseInt(request.getParameter("medi_num"));
-	//System.out.println(num);
-	Medi me = medi.getMedi(num);
-	request.setAttribute("me", me);
-	pageContext.forward("medi_edit.jsp");
+// 사용자 수정
+else if (action.equals("userupdate")) {
+	String id = request.getParameter("user_id");
+	String name = request.getParameter("user_name");
+	String pwd = request.getParameter("user_pwd");
+	String phone = request.getParameter("user_phone");
+	String device = request.getParameter("user_device");
+	String alarm = request.getParameter("user_alarm");
+
+	System.out.println(id);
+	System.out.println(name);
+	System.out.println(pwd);
+	System.out.println(phone);
+	System.out.println(device);
+	System.out.println(alarm);
+	//pageContext.forward("medi_edit.jsp");
+	
+	boolean userupdate = medi.updateUser(id, name, pwd, phone, device, alarm);
+	if (userupdate == true) {%>
+		<script> 
+		alert("수정되었습니다.");
+		location.href="user.jsp";
+		</script>
+	<%
+	} else {
+	%>
+	<script> 
+		alert("수정실패");
+		history.go(-1);
+		</script>
+	<%}
+	
+	
+	
 	
 }
 

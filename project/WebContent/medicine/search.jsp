@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, medicine.*"%>
 
 <%
 String id ="";
@@ -9,6 +9,7 @@ try {
 	if (id != null) {
 		
 %>
+<jsp:useBean id="medi" scope="application" class="medicine.DBConnect"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,6 +51,36 @@ try {
 
 </script>
 
+<%
+String tempPage = request.getParameter("page");
+int cPage = 0;
+
+// cPage(현재 페이지 정하기)
+if (tempPage == null || tempPage.length() == 0) {
+    cPage = 1;
+}
+try {
+    cPage = Integer.parseInt(tempPage);
+} catch (NumberFormatException e) {
+    cPage = 1;
+}
+
+int totalRows = medi.getNoneTotalRows();
+
+int len = 5;
+int totalPages = totalRows % len == 0 ? totalRows / len : (totalRows / len) + 1;
+if (totalPages == 0) {
+    totalPages = 1;
+}
+if (cPage > totalPages) {
+    cPage = 1;
+}
+int start = (cPage - 1) * 5;
+int end = cPage * 5;
+
+ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
+%>
+
 <div class="main">
 	<jsp:include page="inc_header.jsp" flush="false" />
 	<div class="row page">
@@ -68,7 +99,6 @@ try {
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						<th scope="col">사진</th>
 						<th scope="col">의약품명</th>
 						<th scope="col">보관</th>
 						<th scope="col">검색</th>
@@ -76,22 +106,28 @@ try {
 					</tr>
 				</thead>
 				<tbody>
+				<%
+	          if (datas.size() != 0) {
+	        	  
+					for(None no : ( ArrayList<None>) datas) {
+					%>
 					<tr>
-						<th scope="row">2</th>
-						<td><img alt="" src="img/none.png" class="medicineimg"></td>
-						<td>루테인</td>
-						<td>3회</td>
-						<td>3회</td>
-						<td><input type="submit" class="btn btn-outline-success" value="추가" data-target="#addModal" data-toggle="modal"></td>
+						<td scope="row" id="num"><%=no.getNone_num()%></td>		
+						<td id="name"><%=no.getNone_name() %></td>
+						<td id="store"><%=no.getNone_store() %>회</td>
+						<td id="search"><%=no.getNone_search() %>회</td>
+						<td><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=no.getNone_num()%>,'<%=no.getNone_name() %>')" data-target="#updateModal" data-toggle="modal"></td>
 					</tr>
-					<tr>
-						<th scope="row">1</th>
-						<td><img alt="p2" src="img/none.png" class="medicineimg"></td>
-						<td>미네랄 영양제</td>
-						<td>1회</td>
-						<td>7회</td>
-						<td><input type="submit" class="btn btn-outline-success" value="추가" data-target="#addModal" data-toggle="modal"></td>
-					</tr>
+					<%
+					}
+	          } else {
+	        	  %>
+	        	  <tr>
+					<td scope="row">데이터가 존재하지 않습니다.</td>
+				</tr>
+				<%
+	          }
+					%>
 				</tbody>
 			</table>
 			
