@@ -112,15 +112,20 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 						<th scope="col">비밀번호</th>
 						<th scope="col">휴대폰 번호</th>
 						<th scope="col">디바이스 일련번호</th>
-						<th scope="col">알림설정</th>
+						<th scope="col">알림설정(ON/OFF)</th>
 						<th scope="col"></th>
 					</tr>
 				</thead>
 				<tbody>
 				<%
 	          if (datas.size() != 0) {
-	        	  
+	        	  String alarm = null;
 					for(User us : (ArrayList<User>) datas) {
+						if (us.getUser_alarm() == 1) {
+							alarm = "ON";
+						} else {
+							alarm = "OFF";
+						}
 					%>
 					<tr>
 						<td scope="row" id="id"><%=us.getUser_id()%></td>		
@@ -128,7 +133,7 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 						<td id="pwd"><%=us.getUser_pwd() %></td>
 						<td id="phone"><%=us.getUser_phone() %></td>
 						<td id="device"><%=us.getUser_device() %></td>
-						<td id="alarm"><%=us.getUser_alarm() %></td>
+						<td id="alarm"><%=alarm %></td>
 						<td><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction('<%=us.getUser_id()%>','<%=us.getUser_name() %>','<%=us.getUser_pwd() %>','<%=us.getUser_phone() %>','<%=us.getUser_device() %>',<%=us.getUser_alarm() %>)" data-target="#userModal" data-toggle="modal"></td>
 					</tr>
 					<%
@@ -285,7 +290,13 @@ function editFunction(id, name, pwd, phone, device, alarm) {
 	$("#user_pwd").val(pwd);
 	$("#user_phone").val(phone);
 	$("#user_device").val(device);
-	$("#user_alarm").val(alarm);
+	
+	if (alarm == 1) {
+		$("#user_alarm").val("ON");
+	} else {
+		$("#user_alarm").val("OFF");
+	}
+	
 	
 	
 }

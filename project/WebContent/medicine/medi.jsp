@@ -74,7 +74,7 @@ if (cPage > totalPages) {
     cPage = 1;
 }
 int start = (cPage - 1) * 5;
-int end = cPage * 5;
+int end = len;
 
 ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 %>

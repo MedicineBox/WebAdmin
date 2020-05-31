@@ -116,7 +116,7 @@ ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
 						<td id="name"><%=no.getNone_name() %></td>
 						<td id="store"><%=no.getNone_store() %>회</td>
 						<td id="search"><%=no.getNone_search() %>회</td>
-						<td><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=no.getNone_num()%>,'<%=no.getNone_name() %>')" data-target="#updateModal" data-toggle="modal"></td>
+						<td><input type="submit" class="btn btn-outline-success" value="추가" onclick="addFunction(<%=no.getNone_num()%>,'<%=no.getNone_name() %>')" data-target="#addModal" data-toggle="modal"></td>
 					</tr>
 					<%
 					}
@@ -146,7 +146,7 @@ ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
 </div>
 
 <!-- 의약품 정보 추가 모달 -->
-<form method="post" action="add.jsp">
+<form method="post" action="admin_control.jsp?action=mediAdd" enctype="multipart/form-data">
 	<div class="modal fade" role="dialog" id="addModal" tabindex="-1">
 		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<div class="modal-content">
@@ -158,22 +158,23 @@ ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
 				</div>
 				
 				<div class="modal-body">
-					<div class="form-group">
-						<label for="ps_title">의약품명</label>
-						<input type="text" class="form-control" id="ps_title" name="ps_title">
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">의약품명</label>
+						<input type="hidden" id="none_num" name="none_num">
+						<input type="text" class="form-control col-sm-8" id="medi_name" name="medi_name">
 					</div>
-					<div class="form-group">
-						<label for="ps_title">의약품 사진</label>
-						<input type="file" class="form-control">
-					</div>					
-					<div class="form-group">
-						<label for="ps_title">효능·효과</label>
-						<textarea class="form-control" rows="3"></textarea>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">의약품 사진</label>
+						<input type="hidden" class="upload-name" disabled="disabled">
+						<input type="file" class="form-control col-sm-8 upload-hidden" id="medi_photo" name="medi_photo">
 					</div>
-					
-					<div class="form-group">
-						<label for="ps_title">용법·용량</label>
-						<textarea class="form-control" rows="3"></textarea>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">효능·효과</label>
+						<textarea rows="5" cols="71" class="form-control col-sm-8" id="medi_effect" name="medi_effect"></textarea>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">용법·용량</label>
+						<textarea rows="3" cols="71" class="form-control col-sm-8" id="medi_use" name="medi_use"></textarea>
 					</div>
 				</div>
 				
@@ -185,6 +186,36 @@ ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
 		</div>
 	</div>
 </form>
+
+<script>
+//사진첨부
+$(document).ready(function(){	
+	var fileTarget = $('.upload-hidden');
+
+	fileTarget.on('change', function(){ // 값이 변경되면
+		if(window.FileReader){ // modern browser 
+		var filename = $(this)[0].files[0].name; 
+		}
+		else { // old IE 
+		var filename = $(this).val().split('/').pop().split('\\').pop(); //파일명만 추출
+	}
+
+		// 추출한 파일명 삽입
+		$(this).siblings('.upload-name').val(filename);
+	});
+});
+
+//추가 모달창으로 값 넘겨주기
+function addFunction(num, name) {	
+	var num = num;
+	var name = name;
+	
+	$("#none_num").val(num);
+	$("#medi_name").val(name);
+	
+	
+}
+</script>
 
 </body>
 </html>

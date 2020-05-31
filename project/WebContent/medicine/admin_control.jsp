@@ -140,6 +140,12 @@ else if (action.equals("userupdate")) {
 	String device = request.getParameter("user_device");
 	String alarm = request.getParameter("user_alarm");
 
+	if(alarm.equals("ON")) {
+		alarm = "1";
+	} else {
+		alarm = "0";
+	}
+
 	System.out.println(id);
 	System.out.println(name);
 	System.out.println(pwd);
