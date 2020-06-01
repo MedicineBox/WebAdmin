@@ -34,7 +34,6 @@ public class DBConnect<Search> {
 		
 	/// DB close
 	void disconnect() {
-		// null 泥댄겕瑜� �븯怨� close
 		if(pstmt != null) {
 			try {
 				pstmt.close();
@@ -50,7 +49,7 @@ public class DBConnect<Search> {
 			}
 		}
 	}
-
+	
 	// 로그인 확인
 	public int loginCheck(String id, String pw) {
 		connect();
@@ -140,6 +139,7 @@ public class DBConnect<Search> {
 		return true;
 	}
 	
+	
 	// 사용자 전체 로우 수
 	public int getUserTotalRows() {
 		connect();
@@ -164,7 +164,7 @@ public class DBConnect<Search> {
 		return count;
 	}
 	
-	//전체 사용자 정보 리스트
+	// 전체 사용자 정보 리스트
 	public List<User> getUserList(int start, int end){
 		List<User> datas = new ArrayList<>();
 		connect();
@@ -200,7 +200,32 @@ public class DBConnect<Search> {
 		return datas;
 	}
 	
-	// �의약품 수정
+	// 사용자 정보 수정
+	public boolean updateUser(String id, String name, String pwd, String phone, String device, String alarm) {
+		connect();
+		
+		String sql = "UPDATE user SET user_name=?, user_pwd=?, user_phone=?, user_device=?, user_alarm=? WHERE user_id=?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, pwd);
+			pstmt.setString(3, phone);
+			pstmt.setString(4, device);
+			pstmt.setString(5, alarm);
+			pstmt.setString(6, id);
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			return false;
+		} finally {
+			disconnect();
+		}
+		return true;
+	}
+		
+	
+	// 의약품 추가
 	public boolean insertMedi(String name, String photo, String effect, String use) {
 		connect();
 		
@@ -222,6 +247,21 @@ public class DBConnect<Search> {
 		return true;
 	}
 	
+	// 의약품 삭제
+	public boolean deleteMedi(String medi_num) {
+		String sql = "DELETE FROM medi where medi_num = ?";
+		connect();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, medi_num);
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return true;
+	}
 	
 	// 의약품 전체 로우 수 
 	public int getMediTotalRows() {
@@ -248,7 +288,7 @@ public class DBConnect<Search> {
 		return count;
 	}
 	
-	// �의약품 리스트
+	// 전체 의약품 정보 리스트
 	public List<Medi> getMediList(int start, int end){
 		List<Medi> datas = new ArrayList<>();
 		connect();
@@ -285,63 +325,6 @@ public class DBConnect<Search> {
 		return datas;
 	}
 	
-	
-	// �쓽�빟�뭹 �븯�굹 議고쉶
-	public Medi getMedi(int medi_num) {
-		connect();
-		
-		String sql = "select * from addrbook where medi_num = ?";
-		
-		Medi medi = new Medi();
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, medi_num);
-			
-			ResultSet rs = pstmt.executeQuery();
-			
-			// �뜲�씠�꽣媛� �븯�굹留� �엳�쑝誘�濡� rs.next()瑜� �븳踰덈쭔 �떎�뻾 �븳�떎.
-			rs.next();
-			medi.setMedi_num(rs.getInt("medi_num"));
-			medi.setMedi_name(rs.getString("medi_name"));
-			medi.setMedi_photo(rs.getString("medi_photo"));
-			medi.setMedi_effect(rs.getString("medi_effect"));
-			medi.setMedi_use(rs.getString("medi_use"));
-			medi.setMedi_store(rs.getInt("medi_store"));
-			medi.setMedi_search(rs.getInt("medi_search"));
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			disconnect();
-		}
-		return medi;
-	}
-	
-	// 사용자정보수정
-	public boolean updateUser(String id, String name, String pwd, String phone, String device, String alarm) {
-		connect();
-		
-		String sql = "UPDATE user SET user_name=?, user_pwd=?, user_phone=?, user_device=?, user_alarm=? WHERE user_id=?";
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, name);
-			pstmt.setString(2, pwd);
-			pstmt.setString(3, phone);
-			pstmt.setString(4, device);
-			pstmt.setString(5, alarm);
-			pstmt.setString(6, id);
-			
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			return false;
-		} finally {
-			disconnect();
-		}
-		return true;
-	}
 	
 	// 검색어 전체 로우 수
 	public int getNoneTotalRows() {
@@ -400,6 +383,22 @@ public class DBConnect<Search> {
 			disconnect();
 		}
 		return datas;
+	}
+	
+	// 검색어 삭제
+	public boolean deleteNone(String none_num) {
+		String sql = "DELETE FROM none where none_num = ?";
+		connect();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, none_num);
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return true;
 	}
 	
 }

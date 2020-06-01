@@ -77,6 +77,44 @@ else if(action.equals("setting")) {
 	}
 }
 
+//사용자 수정
+else if (action.equals("userupdate")) {
+	String id = request.getParameter("user_id");
+	String name = request.getParameter("user_name");
+	String pwd = request.getParameter("user_pwd");
+	String phone = request.getParameter("user_phone");
+	String device = request.getParameter("user_device");
+	String alarm = request.getParameter("user_alarm");
+
+	if(alarm.equals("ON")) {
+		alarm = "1";
+	} else {
+		alarm = "0";
+	}
+
+	/* System.out.println(id);
+	System.out.println(name);
+	System.out.println(pwd);
+	System.out.println(phone);
+	System.out.println(device);
+	System.out.println(alarm); */
+	
+	boolean userupdate = medi.updateUser(id, name, pwd, phone, device, alarm);
+	if (userupdate == true) {%>
+		<script> 
+		alert("수정되었습니다.");
+		location.href="user.jsp";
+		</script>
+	<%
+	} else {
+	%>
+	<script> 
+		alert("수정실패");
+		history.go(-1);
+		</script>
+	<%}	
+}
+
 
 // 의약품 추가
 else if (action.equals("mediAdd")) {
@@ -111,67 +149,81 @@ else if (action.equals("mediAdd")) {
 	String medi_name = m.getParameter("medi_name");
 	String medi_effect = m.getParameter("medi_effect");
 	String medi_use = m.getParameter("medi_use");
-
-	boolean insertMedi = medi.insertMedi(medi_name, ofile, medi_effect, medi_use);
 	
-	if (insertMedi == true) {%>
+	String none_num = m.getParameter("none_num");
+	System.out.println(none_num);
+	
+	if (none_num.equals("0")) {
+		boolean insertMedi = medi.insertMedi(medi_name, ofile, medi_effect, medi_use);
+		
+		if (insertMedi == true) {%>
+			<script> 
+			alert("의약품 정보가 추가 되었습니다.");
+			location.href="medi.jsp";
+			</script>
+			<%
+		} else {
+			%>
+			<script> 
+			alert("추가 실패");
+			history.go(-1);
+			</script>
+			<%
+		}
+	} else {
+		boolean deleteNone = medi.deleteNone(none_num);
+		
+		if (deleteNone == true) {
+			boolean insertMedi = medi.insertMedi(medi_name, ofile, medi_effect, medi_use);
+			
+			if (insertMedi == true) {%>
+			<script> 
+			alert("의약품 정보가 추가 되었습니다.");
+			location.href="medi.jsp";
+			</script>
+			<%
+			} else {
+				%>
+				<script> 
+				alert("추가 실패");
+				history.go(-1);
+				</script>
+				<%
+			}
+		} else {
+			%>
+			<script> 
+			alert("검색어 삭제 실패");
+			history.go(-1);
+			</script>
+			<%
+		}
+		
+	}
+
+}
+
+//의약품 삭제
+else if (action.equals("mediDelete")) {
+	String num = request.getParameter("medi_d_num");
+
+	boolean deleteMedi = medi.deleteMedi(num);
+	
+	if (deleteMedi == true) {%>
 		<script> 
-		alert("의약품 정보가 추가 되었습니다.");
+		alert("의약품 정보가 삭제 되었습니다.");
 		location.href="medi.jsp";
 		</script>
 		<%
 	} else {
 		%>
 		<script> 
-		alert("추가 실패");
+		alert("삭제 실패");
 		history.go(-1);
 		</script>
 		<%
 	}
 
-}
-
-// 사용자 수정
-else if (action.equals("userupdate")) {
-	String id = request.getParameter("user_id");
-	String name = request.getParameter("user_name");
-	String pwd = request.getParameter("user_pwd");
-	String phone = request.getParameter("user_phone");
-	String device = request.getParameter("user_device");
-	String alarm = request.getParameter("user_alarm");
-
-	if(alarm.equals("ON")) {
-		alarm = "1";
-	} else {
-		alarm = "0";
-	}
-
-	System.out.println(id);
-	System.out.println(name);
-	System.out.println(pwd);
-	System.out.println(phone);
-	System.out.println(device);
-	System.out.println(alarm);
-	//pageContext.forward("medi_edit.jsp");
-	
-	boolean userupdate = medi.updateUser(id, name, pwd, phone, device, alarm);
-	if (userupdate == true) {%>
-		<script> 
-		alert("수정되었습니다.");
-		location.href="user.jsp";
-		</script>
-	<%
-	} else {
-	%>
-	<script> 
-		alert("수정실패");
-		history.go(-1);
-		</script>
-	<%}
-	
-	
-	
-	
 }
 
 %>

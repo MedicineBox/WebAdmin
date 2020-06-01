@@ -107,19 +107,22 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 			<table class="table table-hover">
 				<thead>
 					<tr>
+						<th scope="col">#</th>
 						<th scope="col">아이디</th>
 						<th scope="col">이름</th>
 						<th scope="col">비밀번호</th>
 						<th scope="col">휴대폰 번호</th>
 						<th scope="col">디바이스 일련번호</th>
-						<th scope="col">알림설정(ON/OFF)</th>
+						<th scope="col">알림설정</th>
 						<th scope="col"></th>
 					</tr>
 				</thead>
 				<tbody>
 				<%
-	          if (datas.size() != 0) {
-	        	  String alarm = null;
+				if (datas.size() != 0) {
+					String alarm = null;
+					int i = 5 * cPage - 4;
+					
 					for(User us : (ArrayList<User>) datas) {
 						if (us.getUser_alarm() == 1) {
 							alarm = "ON";
@@ -128,7 +131,8 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 						}
 					%>
 					<tr>
-						<td scope="row" id="id"><%=us.getUser_id()%></td>		
+						<td scope="row"><%= i%></td>
+						<td id="id"><%=us.getUser_id()%></td>	
 						<td id="name"><%=us.getUser_name() %></td>
 						<td id="pwd"><%=us.getUser_pwd() %></td>
 						<td id="phone"><%=us.getUser_phone() %></td>
@@ -137,6 +141,7 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 						<td><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction('<%=us.getUser_id()%>','<%=us.getUser_name() %>','<%=us.getUser_pwd() %>','<%=us.getUser_phone() %>','<%=us.getUser_device() %>',<%=us.getUser_alarm() %>)" data-target="#userModal" data-toggle="modal"></td>
 					</tr>
 					<%
+					i+=1;
 					}
 	          } else {
 	        	  %>
@@ -238,15 +243,15 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">이름</label>
-						<input type="text" class="form-control col-sm-8" id="user_name" name="user_name">
+						<input type="text" class="form-control col-sm-8" id="user_name" name="user_name" required>
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">비밀번호</label>
-						<input type="text" class="form-control col-sm-8" id="user_pwd" name="user_pwd">
+						<input type="text" class="form-control col-sm-8" id="user_pwd" name="user_pwd" required>
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">휴대폰 번호</label>
-						<input type="text" class="form-control col-sm-8" id="user_phone" name="user_phone">
+						<input type="text" class="form-control col-sm-8" id="user_phone" name="user_phone" required>
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">디바이스 일련번호</label>
@@ -254,7 +259,15 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 					</div>
 					<div class="form-group row">
 						<label for="ps_title" class="col-sm-3 col-form-label">알림설정</label>
-						<input type="text" class="form-control col-sm-8" id="user_alarm" name="user_alarm">
+						<!-- <input type="text" class="form-control col-sm-8" id="user_alarm" name="user_alarm"> -->
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="user_alarm" id="alarm_on" value="ON" required>
+							<label class="form-check-label" for="inlineRadio1">ON</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="user_alarm" id="alarm_off" value="OFF">
+							<label class="form-check-label" for="inlineRadio2">OFF</label>
+						</div>
 					</div>
 				</div>
 				
@@ -293,8 +306,10 @@ function editFunction(id, name, pwd, phone, device, alarm) {
 	
 	if (alarm == 1) {
 		$("#user_alarm").val("ON");
+		$("input:radio[name='user_alarm']:radio[value='ON']").prop('checked', true); 
 	} else {
 		$("#user_alarm").val("OFF");
+		$("input:radio[name='user_alarm']:radio[value='OFF']").prop('checked', true);
 	}
 	
 	

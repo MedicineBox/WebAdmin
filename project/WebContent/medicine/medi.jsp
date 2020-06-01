@@ -39,7 +39,6 @@ try {
 	cursor: pointer;
 }
 
-
 </style>
 
 </head>
@@ -109,25 +108,29 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 						<th scope="col">보관</th>
 						<th scope="col">검색</th>
 						<th scope="col"></th>
+						<th scope="col"></th>
 					</tr>
 				</thead>
 				<tbody>
 				<%
-	          if (datas.size() != 0) {
-	        	  
+				if (datas.size() != 0) {
+					int i = 5 * cPage - 4;
+					
 					for(Medi me : (ArrayList<Medi>) datas) {
 					%>
 					<tr>
-						<td scope="row" id="num"><%=me.getMedi_num()%></td>
+						<td scope="row"><%= i%></td>
 						<td><img src="img/<%=me.getMedi_photo()%>" id="photo" class="medicineimg"></td>			
 						<td id="name"><%=me.getMedi_name() %></td>
 						<td id="effect" style="display: none;"><%=me.getMedi_effect() %></td>
 						<td id="use" style="display: none;"><%=me.getMedi_use() %></td>
 						<td id="store"><%=me.getMedi_store() %>회</td>
 						<td id="search"><%=me.getMedi_search() %>회</td>
-						<td><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=me.getMedi_num()%>,'<%=me.getMedi_name() %>','img/<%=me.getMedi_photo()%>','<%=me.getMedi_effect() %>','<%=me.getMedi_use() %>')" data-target="#updateModal" data-toggle="modal"></td>
+						<td style="padding-right: 0px;"><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=me.getMedi_num()%>,'<%=me.getMedi_name() %>','img/<%=me.getMedi_photo()%>','<%=me.getMedi_effect() %>','<%=me.getMedi_use() %>')" data-target="#updateModal" data-toggle="modal"></td>
+						<td><input type="submit" class="btn btn-outline-danger" value="삭제" onclick="deleteFunction(<%=me.getMedi_num()%>)" data-target="#deleteModal" data-toggle="modal"></td>
 					</tr>
 					<%
+					i+=1;
 					}
 	          } else {
 	        	  %>
@@ -225,20 +228,21 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 				<div class="modal-body">
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">의약품명</label>
-						<input type="text" class="form-control col-sm-8" id="medi_name" name="medi_name">
+						<input type="hidden" id="none_num" name="none_num" value="0">
+						<input type="text" class="form-control col-sm-8" id="medi_name" name="medi_name" required>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">의약품 사진</label>
 						<input type="hidden" class="upload-name" disabled="disabled">
-						<input type="file" class="form-control col-sm-8 upload-hidden" id="medi_photo" name="medi_photo">
+						<input type="file" class="form-control col-sm-8 upload-hidden" id="medi_photo" name="medi_photo" required>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">효능·효과</label>
-						<textarea rows="5" cols="71" class="form-control col-sm-8" id="medi_effect" name="medi_effect"></textarea>
+						<textarea rows="5" cols="71" class="form-control col-sm-8" id="medi_effect" name="medi_effect" required></textarea>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">용법·용량</label>
-						<textarea rows="3" cols="71" class="form-control col-sm-8" id="medi_use" name="medi_use"></textarea>
+						<textarea rows="3" cols="71" class="form-control col-sm-8" id="medi_use" name="medi_use" required></textarea>
 					</div>
 				</div>
 				
@@ -252,7 +256,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 </form>
 
 <!-- 의약품 정보 수정 모달 -->
-<form method="post" action="admin_control?action=mediUpdate.jsp">
+<form method="post" action="admin_control.jsp?action=mediUpdate">
 	<div class="modal fade" role="dialog" id="updateModal" tabindex="-1">
 		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<div class="modal-content">
@@ -269,7 +273,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">의약품명</label>
-						<input type="text" class="form-control col-sm-8" id="medi_e_name" name="medi_e_name" value="">
+						<input type="text" class="form-control col-sm-8" id="medi_e_name" name="medi_e_name" required>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">의약품 사진</label>
@@ -279,11 +283,11 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">효능·효과</label>
-						<textarea rows="5" cols="71" class="form-control col-sm-8" id="medi_e_effect" name="medi_e_effect"></textarea>
+						<textarea rows="5" cols="71" class="form-control col-sm-8" id="medi_e_effect" name="medi_e_effect" required></textarea>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">용법·용량</label>
-						<textarea rows="3" cols="71" class="form-control col-sm-8" id="medi_e_use" name="medi_e_use"></textarea>
+						<textarea rows="3" cols="71" class="form-control col-sm-8" id="medi_e_use" name="medi_e_use" required></textarea>
 					</div>
 				</div>
 				
@@ -296,9 +300,34 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 	</div>
 </form>
 
+<!-- 의약품 정보 삭제 모달 -->
+<form method="post" action="admin_control.jsp?action=mediDelete">
+	<div class="modal fade" role="dialog" id="deleteModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">의약품 정보 삭제</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+				<input type="hidden" id="medi_d_num" name="medi_d_num">
+					삭제하시겠습니까?
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary" value="확인">
+					<input type="button" class="btn btn-secondary" data-dismiss="modal" value="취소">
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
 <script>
 //사진첨부
 $(document).ready(function(){
+	// 메뉴 활성화
 	$('#medi').addClass('menu_active');
 	
 	var fileTarget = $('.upload-hidden');
@@ -337,6 +366,23 @@ function editFunction(num, name, photo, effect, use) {
 	$("#medi_e_photo").attr("src", photo);
 	$("#medi_e_effect").val(effect);
 	$("#medi_e_use").val(use);
+	
+	
+}
+
+//수정 모달창으로 값 넘겨주기
+function deleteFunction(num) {	
+	var num = num;
+	
+	//var result = effect.replace(/(\n|\r\n)/g, '<br>');
+	/* var name = document.getElementById("name").childNodes[0].nodeValue;
+	var effect = document.getElementById("effect").childNodes[0].nodeValue;
+	var use = document.getElementById("use").childNodes[0].nodeValue;
+	var photo = document.getElementById("photo").getAttribute('src'); */
+	
+	console.log(num);
+	
+	$("#medi_d_num").val(num);
 	
 	
 }

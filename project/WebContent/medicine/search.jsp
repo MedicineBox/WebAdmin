@@ -41,16 +41,6 @@ try {
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-<script>
-
-    $(document).ready(function () {
-
-        $('#search').addClass('menu_active');
-
-    });
-
-</script>
-
 <%
 String tempPage = request.getParameter("page");
 int cPage = 0;
@@ -92,7 +82,7 @@ ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
 			<nav class="navbar">
 				<h3>검색어 목록</h3>
 			</nav>
-			<h6>사용자의 검색어 중 DB에 없어 API를 이용하여 검색된 리스트입니다.DB에 의약품 정보를 추가해 주세요.</h6>
+			<h6>사용자의 검색어 중 DB에 없어 API를 이용하여 검색된 리스트입니다. DB에 의약품 정보를 추가해 주세요.</h6>
 			<br>
 			
 			<table class="table table-hover">
@@ -108,17 +98,19 @@ ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
 				<tbody>
 				<%
 	          if (datas.size() != 0) {
+					int i = 5 * cPage - 4;
 	        	  
 					for(None no : ( ArrayList<None>) datas) {
 					%>
 					<tr>
-						<td scope="row" id="num"><%=no.getNone_num()%></td>		
+						<td scope="row" id="num"><%= i%></td>		
 						<td id="name"><%=no.getNone_name() %></td>
 						<td id="store"><%=no.getNone_store() %>회</td>
 						<td id="search"><%=no.getNone_search() %>회</td>
 						<td><input type="submit" class="btn btn-outline-success" value="추가" onclick="addFunction(<%=no.getNone_num()%>,'<%=no.getNone_name() %>')" data-target="#addModal" data-toggle="modal"></td>
 					</tr>
 					<%
+					i+=1;
 					}
 	          } else {
 	        	  %>
@@ -131,15 +123,71 @@ ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
 				</tbody>
 			</table>
 			
-			<!-- 
+			<%
+			//페이지 처음과 끝을 지정하는 부분
+			int currentBlock = cPage % totalPages == 0 ? cPage / totalPages : (cPage / totalPages) + 1;
+			int startPage = (currentBlock - 1) * totalPages + 1;
+			int endPage = startPage + totalPages - 1;
+			//마지막 페이지 묶음에서 총 페이지수를 넘어가면 끝 페이지를 마지막 페이지 숫자로 지정
+			if (endPage > totalPages) {
+			 endPage = totalPages;
+			}
+			
+			
+			%>
+			<!-- 페이징 -->
 			<ul class="pagination justify-content-center">
-				<li class="page-item disabled"><a class="page-link" href="#"><</a></li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">></a></li>
+				<%
+				if (startPage == 1) {
+				%>
+					<li class="page-item disabled">
+						<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+							<
+						</a>
+					</li>
+				<%
+				} else {
+				%>
+					<li class="page-item">
+						<a class="page-link" href="medi.jsp?page=<%=startPage - 1%>" tabindex="-1" aria-disabled="true">
+							<
+						</a>
+					</li>
+				<%
+				}
+				%>
+				<%
+				for (int i = startPage; i <= endPage; i++) {
+				%>
+					<li class="page-item">
+						<a class="page-link" href="medi.jsp?page=<%=i %>">
+							<%=i%>
+						</a>
+					</li>
+				<%
+				}
+				%>
+				<%
+				// 마지막 페이지 숫자와 startPage에서 pageLength 더해준 값이 일치할 때(즉 마지막 페이지 블럭일 때)
+				if (totalPages == endPage) {
+				%>
+					<li class="page-item disabled">
+						<a class="page-link" href="#">
+							>
+						</a>
+					</li>
+				<%
+				} else {
+				%>
+				<li class="page-item">
+					<a class="page-link" href="medi.jsp?page=<%=endPage + 1%>">
+						>
+					</a>
+				</li>
+				<%
+				}
+				%>
 			</ul>
-			-->
 
 		</div>
 	</div>
@@ -189,7 +237,9 @@ ArrayList<None> datas = (ArrayList<None>)medi.getNoneList(start, end);
 
 <script>
 //사진첨부
-$(document).ready(function(){	
+$(document).ready(function(){
+	$('#search').addClass('menu_active');
+	
 	var fileTarget = $('.upload-hidden');
 
 	fileTarget.on('change', function(){ // 값이 변경되면
