@@ -223,6 +223,41 @@ public class DBConnect<Search> {
 		}
 		return true;
 	}
+	
+	// 사용자 검색 리스트
+	public List<User> getUser(String user){
+		List<User> datas = new ArrayList<>();
+		connect();
+		
+		String sql = "select * from user where user_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				User userS = new User();
+				
+				userS.setUser_id(rs.getString("user_id"));
+				userS.setUser_pwd(rs.getString("user_pwd"));
+				userS.setUser_name(rs.getString("user_name"));
+				userS.setUser_phone(rs.getString("user_phone"));
+				userS.setUser_device(rs.getString("user_device"));
+				userS.setUser_alarm(rs.getInt("user_alarm"));
+				
+				datas.add(userS);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			disconnect();
+		}
+		return datas;
+	}
 		
 	
 	// 의약품 추가

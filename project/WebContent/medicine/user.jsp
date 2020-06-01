@@ -97,8 +97,8 @@ ArrayList<User> datas = (ArrayList<User>)medi.getUserList(start, end);
 			<nav class="navbar">
 				<h3>사용자 목록</h3>
 			
-				<form class="form-inline">
-					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				<form class="form-inline" action="userSearch.jsp">
+					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="user" name="user">
 					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 				</form>
 			</nav>

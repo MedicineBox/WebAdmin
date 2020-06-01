@@ -115,7 +115,6 @@ else if (action.equals("userupdate")) {
 	<%}	
 }
 
-
 // 의약품 추가
 else if (action.equals("mediAdd")) {
 	//String dir= "C:/Dev/WebAdmin/project/WebContent/medicine/img";
