@@ -229,11 +229,14 @@ public class DBConnect<Search> {
 		List<User> datas = new ArrayList<>();
 		connect();
 		
-		String sql = "select * from user where user_id = ?";
+		String keyword = "%" + user + "%";
+		
+		String sql = "select * from user where user_id like ?";
+		System.out.println(sql);
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user);
+			pstmt.setString(1, keyword);
 			
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -349,6 +352,45 @@ public class DBConnect<Search> {
 				medi.setMedi_search(rs.getInt("medi_search"));
 				
 				datas.add(medi);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			disconnect();
+		}
+		return datas;
+	}
+	
+	// 의약품 검색 리스트
+	public List<Medi> getMedi(String medi){
+		List<Medi> datas = new ArrayList<>();
+		connect();
+		
+		String keyword = "%" + medi + "%";
+		
+		String sql = "select * from medi where medi_name like ?";
+		System.out.println(sql);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Medi mediS = new Medi();
+				
+				mediS.setMedi_num(rs.getInt("medi_num"));
+				mediS.setMedi_name(rs.getString("medi_name"));
+				mediS.setMedi_photo(rs.getString("medi_photo"));
+				mediS.setMedi_effect(rs.getString("medi_effect"));
+				mediS.setMedi_use(rs.getString("medi_use"));
+				mediS.setMedi_store(rs.getInt("medi_store"));
+				mediS.setMedi_search(rs.getInt("medi_search"));
+				
+				datas.add(mediS);
 			}
 			rs.close();
 		} catch (SQLException e) {

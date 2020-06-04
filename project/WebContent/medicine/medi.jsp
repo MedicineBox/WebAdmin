@@ -92,8 +92,8 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 					<button class="btn medi_add" data-target="#mediaddModal" data-toggle="modal"><i class="fas fa-plus-circle"></i></button>
 				</h3>
 			
-				<form class="form-inline">
-					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				<form class="form-inline" action="mediSearch.jsp">
+					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="mediS" name="mediS">
 					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 				</form>
 			</nav>
@@ -370,7 +370,7 @@ function editFunction(num, name, photo, effect, use) {
 	
 }
 
-//수정 모달창으로 값 넘겨주기
+//삭제 모달창으로 값 넘겨주기
 function deleteFunction(num) {	
 	var num = num;
 	
