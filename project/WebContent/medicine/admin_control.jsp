@@ -225,4 +225,60 @@ else if (action.equals("mediDelete")) {
 
 }
 
+//의약품 수정
+else if (action.equals("mediUpdate")) {
+	String realFolder = "";
+	String filename1 = ""; 
+	String savefile = "img"; 
+	String path = session.getServletContext().getRealPath("medicine/img");
+
+	int max = 20*1024*1024;
+	MultipartRequest m = null;
+
+	String file = null;
+
+	String ofile = null;
+
+
+	try {
+		
+		m = new MultipartRequest(request,path,max,"utf-8",new DefaultFileRenamePolicy());
+
+		file = m.getFilesystemName("medi_edit_photo");
+
+	 	ofile = m.getOriginalFileName("medi_edit_photo");
+			
+			
+	} catch(Exception e) {
+		out.println(e);
+	}
+
+	String num = m.getParameter("medi_e_num");
+	String name = m.getParameter("medi_e_name");
+	String effect = m.getParameter("medi_e_effect");
+	String use = m.getParameter("medi_e_use");
+	
+	System.out.println(num);
+	System.out.println(name);
+	System.out.println(ofile);
+	System.out.println(effect);
+	System.out.println(use);
+	
+	boolean mediUpdate = medi.updateMedi(num, name, ofile, effect, use);
+	
+	if (mediUpdate == true) {%>
+		<script> 
+		alert("수정되었습니다.");
+		location.href="medi.jsp";
+		</script>
+	<%
+	} else {
+	%>
+	<script> 
+		alert("수정실패");
+		history.go(-1);
+		</script>
+	<%}	
+}
+
 %>

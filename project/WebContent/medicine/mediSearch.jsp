@@ -49,33 +49,10 @@ try {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 <%
-String tempPage = request.getParameter("page");
-int cPage = 0;
 
-// cPage(현재 페이지 정하기)
-if (tempPage == null || tempPage.length() == 0) {
-    cPage = 1;
-}
-try {
-    cPage = Integer.parseInt(tempPage);
-} catch (NumberFormatException e) {
-    cPage = 1;
-}
+String mediS = request.getParameter("mediS");
 
-int totalRows = medi.getMediTotalRows();
-
-int len = 5;
-int totalPages = totalRows % len == 0 ? totalRows / len : (totalRows / len) + 1;
-if (totalPages == 0) {
-    totalPages = 1;
-}
-if (cPage > totalPages) {
-    cPage = 1;
-}
-int start = (cPage - 1) * 5;
-int end = len;
-
-ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
+ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMedi(mediS);
 %>
 
 <div class="main">
@@ -88,7 +65,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 		<div class="col-9">
 		
 			<nav class="navbar">
-				<h3>의약품 목록
+				<h3>의약품 검색 목록
 					<button class="btn medi_add" data-target="#mediaddModal" data-toggle="modal"><i class="fas fa-plus-circle"></i></button>
 				</h3>
 			
@@ -102,7 +79,6 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th scope="col">#</th>
 						<th scope="col">사진</th>
 						<th scope="col">의약품명</th>
 						<th scope="col">보관</th>
@@ -113,25 +89,23 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 				<tbody>
 				<%
 				if (datas.size() != 0) {
-					int i = 5 * cPage - 4;
 					
 					for(Medi me : (ArrayList<Medi>) datas) {
 					%>
 					<tr>
-						<td scope="row"><%= i%></td>
 						<td><img src="img/<%=me.getMedi_photo()%>" id="photo" class="medicineimg"></td>			
 						<td id="name"><%=me.getMedi_name() %></td>
 						<td id="effect" style="display: none;"><%=me.getMedi_effect() %></td>
 						<td id="use" style="display: none;"><%=me.getMedi_use() %></td>
 						<td id="store"><%=me.getMedi_store() %>회</td>
 						<td id="search"><%=me.getMedi_search() %>회</td>
+						<td style="padding-right: 0px;"><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=me.getMedi_num()%>,'<%=me.getMedi_name() %>','img/<%=me.getMedi_photo()%>','<%=me.getMedi_effect() %>','<%=me.getMedi_use() %>')" data-target="#updateModal" data-toggle="modal"></td>
 						<td>
 							<input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=me.getMedi_num()%>,'<%=me.getMedi_name() %>','img/<%=me.getMedi_photo()%>','<%=me.getMedi_effect() %>','<%=me.getMedi_use() %>')" data-target="#updateModal" data-toggle="modal">
 							<input type="submit" class="btn btn-outline-danger" value="삭제" onclick="deleteFunction(<%=me.getMedi_num()%>)" data-target="#deleteModal" data-toggle="modal">
-						</td>
+						</td>	
 					</tr>
 					<%
-					i+=1;
 					}
 	          } else {
 	        	  %>
@@ -143,73 +117,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 					%>
 				</tbody>
 			</table>
-	
-	<%
-	//페이지 처음과 끝을 지정하는 부분
-	int currentBlock = cPage % totalPages == 0 ? cPage / totalPages : (cPage / totalPages) + 1;
-	int startPage = (currentBlock - 1) * totalPages + 1;
-	int endPage = startPage + totalPages - 1;
-	//마지막 페이지 묶음에서 총 페이지수를 넘어가면 끝 페이지를 마지막 페이지 숫자로 지정
-	if (endPage > totalPages) {
-	 endPage = totalPages;
-	}
-	
-	
-	%>
-			<!-- 페이징 -->
-			<ul class="pagination justify-content-center">
-				<%
-				if (startPage == 1) {
-				%>
-					<li class="page-item disabled">
-						<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-							<
-						</a>
-					</li>
-				<%
-				} else {
-				%>
-					<li class="page-item">
-						<a class="page-link" href="medi.jsp?page=<%=startPage - 1%>" tabindex="-1" aria-disabled="true">
-							<
-						</a>
-					</li>
-				<%
-				}
-				%>
-				<%
-				for (int i = startPage; i <= endPage; i++) {
-				%>
-					<li class="page-item">
-						<a class="page-link" href="medi.jsp?page=<%=i %>">
-							<%=i%>
-						</a>
-					</li>
-				<%
-				}
-				%>
-				<%
-				// 마지막 페이지 숫자와 startPage에서 pageLength 더해준 값이 일치할 때(즉 마지막 페이지 블럭일 때)
-				if (totalPages == endPage) {
-				%>
-					<li class="page-item disabled">
-						<a class="page-link" href="#">
-							>
-						</a>
-					</li>
-				<%
-				} else {
-				%>
-				<li class="page-item">
-					<a class="page-link" href="medi.jsp?page=<%=endPage + 1%>">
-						>
-					</a>
-				</li>
-				<%
-				}
-				%>
-			</ul>
-
+			
 		</div>
 	</div>
 </div>
@@ -257,7 +165,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 </form>
 
 <!-- 의약품 정보 수정 모달 -->
-<form method="post" action="admin_control.jsp?action=mediUpdate" enctype="multipart/form-data">
+<form method="post" action="admin_control.jsp?action=mediUpdate">
 	<div class="modal fade" role="dialog" id="updateModal" tabindex="-1">
 		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<div class="modal-content">
@@ -280,7 +188,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMediList(start, end);
 						<label class="col-sm-3 col-form-label">의약품 사진</label>
 						<label class="col-sm-1"><img class="medicineimg" id="medi_e_photo"></label>
 						<input type="hidden" class="upload-name" disabled="disabled">
-						<input type="file" class="form-control col-sm-7 upload-hidden" id="medi_edit_photo" name="medi_edit_photo">
+						<input type="file" class="form-control col-sm-7 upload-hidden" id="medi_photo" name="medi_photo">
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">효능·효과</label>
@@ -371,7 +279,7 @@ function editFunction(num, name, photo, effect, use) {
 	
 }
 
-//삭제 모달창으로 값 넘겨주기
+//수정 모달창으로 값 넘겨주기
 function deleteFunction(num) {	
 	var num = num;
 	

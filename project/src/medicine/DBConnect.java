@@ -301,6 +301,48 @@ public class DBConnect<Search> {
 		return true;
 	}
 	
+	// 의약품 정보 수정
+	public boolean updateMedi(String num, String name, String photo, String effect, String use) {
+		connect();
+		
+		if (photo == null) {
+			String sql = "UPDATE medi SET medi_name=?, medi_effect=?, medi_use=? WHERE medi_num=?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setString(2, effect);
+				pstmt.setString(3, use);
+				pstmt.setString(4, num);
+				
+				pstmt.executeUpdate();
+			} catch (Exception e) {
+				return false;
+			} finally {
+				disconnect();
+			}
+			return true;
+		} else {
+			String sql = "UPDATE medi SET medi_name=?, medi_photo=?, medi_effect=?, medi_use=? WHERE medi_num=?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setString(2, photo);
+				pstmt.setString(3, effect);
+				pstmt.setString(4, use);
+				pstmt.setString(5, num);
+				
+				pstmt.executeUpdate();
+			} catch (Exception e) {
+				return false;
+			} finally {
+				disconnect();
+			}
+			return true;
+		}
+	}
+	
 	// 의약품 전체 로우 수 
 	public int getMediTotalRows() {
 		connect();
