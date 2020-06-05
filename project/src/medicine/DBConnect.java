@@ -140,6 +140,67 @@ public class DBConnect<Search> {
 	}
 	
 	
+	// 보관 수 5위까지
+	public List<Medi> getMediStore(){
+		List<Medi> datas = new ArrayList<>();
+		connect();
+		
+		String sql = "SELECT medi_name, medi_store, DENSE_RANK() OVER (ORDER BY medi_store DESC) store_rank FROM medi limit 5";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Medi medi = new Medi();
+				
+				medi.setMedi_name(rs.getString("medi_name"));
+				medi.setMedi_store(rs.getInt("medi_store"));
+				
+				datas.add(medi);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			disconnect();
+		}
+		return datas;
+	}
+	
+	// 검색 수 5위까지
+	public List<Medi> getMediSearch(){
+		List<Medi> datas = new ArrayList<>();
+		connect();
+		
+		String sql = "SELECT medi_name, medi_search, DENSE_RANK() OVER (ORDER BY medi_search DESC) search_rank FROM medi limit 5";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Medi medi = new Medi();
+				
+				medi.setMedi_name(rs.getString("medi_name"));
+				medi.setMedi_search(rs.getInt("medi_search"));
+				
+				datas.add(medi);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			disconnect();
+		}
+		return datas;
+	}
+	
+	
 	// 사용자 전체 로우 수
 	public int getUserTotalRows() {
 		connect();

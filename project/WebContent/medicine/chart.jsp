@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, medicine.*"%>
     
+
+
 <%
 String id ="";
 try {
@@ -9,6 +11,7 @@ try {
 	if (id != null) {
 		
 %>
+<jsp:useBean id="medi" scope="application" class="medicine.DBConnect"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,6 +63,10 @@ try {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 
+<%
+ArrayList<Medi> storedatas = (ArrayList<Medi>)medi.getMediStore();
+ArrayList<Medi> searchdatas = (ArrayList<Medi>)medi.getMediSearch();
+%>
 <div class="main">
 	<jsp:include page="inc_header.jsp" flush="false" />
 	<div class="row page">
@@ -73,6 +80,56 @@ try {
 			</nav>
 			<br>
 			
+			<%
+			if (storedatas.size() != 0) {
+			%>
+			<select id="store_name" name="store_name" style="display:none;">
+			<%
+				for(Medi me : (ArrayList<Medi>) storedatas) {
+					%>
+					<option value="<%=me.getMedi_name()%>"><%=me.getMedi_name()%></option>
+					<%
+					}
+				%>
+			</select>
+			<select id="store_num" name="store_num" style="display:none;">
+			<%
+				for(Medi me : (ArrayList<Medi>) storedatas) {
+					%>
+					<option value="<%=me.getMedi_store()%>"><%=me.getMedi_store()%></option>
+					<%
+					}
+				%>
+			</select>
+			<%
+				
+			}%>
+			
+			<%
+			if (searchdatas.size() != 0) {
+			%>
+			<select id="search_name" name="search_name" style="display:none;">
+			<%
+				for(Medi me : (ArrayList<Medi>) searchdatas) {
+					%>
+					<option value="<%=me.getMedi_name()%>"><%=me.getMedi_name()%></option>
+					<%
+					}
+				%>
+			</select>
+			<select id="search_num" name="search_num" style="display:none;">
+			<%
+				for(Medi me : (ArrayList<Medi>) searchdatas) {
+					%>
+					<option value="<%=me.getMedi_search()%>"><%=me.getMedi_search()%></option>
+					<%
+					}
+				%>
+			</select>
+			<%
+				
+			}%>
+			
 			<div class="chart">
 				<canvas id="storechart" class="child"></canvas>
 				<canvas id="searchchart" class="child"></canvas>
@@ -85,21 +142,40 @@ try {
 </body>
 
 <script>
-    $(document).ready(function () {
-        $('#chart').addClass('menu_active');
-    });
-
+$(document).ready(function () {
+	$('#chart').addClass('menu_active');
+	
+});
 </script>
 
 <script>
+var stname = document.getElementById('store_name').options;
+var stnameArray = [];
+var stnum = document.getElementById('store_num').options;
+var stnumArray = [];
+var sename = document.getElementById('search_name').options;
+var senameArray = [];
+var senum = document.getElementById('search_num').options;
+var senumArray = [];
+
+for(var i=0; i<stname.length; i++){
+	stnameArray[i] = stname[i].value;
+	stnumArray[i] = stnum[i].value;
+	
+	senameArray[i] = sename[i].value;
+	senumArray[i] = senum[i].value;
+	
+	//alert(stnameArray[i] + stnumArray[i] + senameArray[i] + senumArray[i]);
+}
+
 var ctx = document.getElementById('storechart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+        labels: [stnameArray[0], stnameArray[1], stnameArray[2], stnameArray[3], stnameArray[4]],
         datasets: [{
             label: '# of Votes',
-            data: [20, 13, 5, 3, 2],
+            data: [stnumArray[0], stnumArray[1], stnumArray[2], stnumArray[3], stnumArray[4]],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -144,10 +220,10 @@ var ctx = document.getElementById('searchchart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+        labels: [senameArray[0], senameArray[1], senameArray[2], senameArray[3], senameArray[4]],
         datasets: [{
             label: '# of Votes',
-            data: [20, 13, 5, 3, 2],
+            data: [senumArray[0], senumArray[1], senumArray[2], senumArray[3], senumArray[4]],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
