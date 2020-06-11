@@ -99,7 +99,6 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMedi(mediS);
 						<td id="use" style="display: none;"><%=me.getMedi_use() %></td>
 						<td id="store"><%=me.getMedi_store() %>회</td>
 						<td id="search"><%=me.getMedi_search() %>회</td>
-						<td style="padding-right: 0px;"><input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=me.getMedi_num()%>,'<%=me.getMedi_name() %>','img/<%=me.getMedi_photo()%>','<%=me.getMedi_effect() %>','<%=me.getMedi_use() %>')" data-target="#updateModal" data-toggle="modal"></td>
 						<td>
 							<input type="submit" class="btn btn-outline-success" value="수정" onclick="editFunction(<%=me.getMedi_num()%>,'<%=me.getMedi_name() %>','img/<%=me.getMedi_photo()%>','<%=me.getMedi_effect() %>','<%=me.getMedi_use() %>')" data-target="#updateModal" data-toggle="modal">
 							<input type="submit" class="btn btn-outline-danger" value="삭제" onclick="deleteFunction(<%=me.getMedi_num()%>)" data-target="#deleteModal" data-toggle="modal">
@@ -165,7 +164,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMedi(mediS);
 </form>
 
 <!-- 의약품 정보 수정 모달 -->
-<form method="post" action="admin_control.jsp?action=mediUpdate">
+<form method="post" action="admin_control.jsp?action=mediUpdate" enctype="multipart/form-data">
 	<div class="modal fade" role="dialog" id="updateModal" tabindex="-1">
 		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<div class="modal-content">
@@ -188,7 +187,7 @@ ArrayList<Medi> datas = (ArrayList<Medi>)medi.getMedi(mediS);
 						<label class="col-sm-3 col-form-label">의약품 사진</label>
 						<label class="col-sm-1"><img class="medicineimg" id="medi_e_photo"></label>
 						<input type="hidden" class="upload-name" disabled="disabled">
-						<input type="file" class="form-control col-sm-7 upload-hidden" id="medi_photo" name="medi_photo">
+						<input type="file" class="form-control col-sm-7 upload-hidden" id="medi_edit_photo" name="medi_edit_photo">
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label">효능·효과</label>
