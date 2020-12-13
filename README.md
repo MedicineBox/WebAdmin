@@ -4,6 +4,7 @@
 확인하여 해당 의약품을 수시로 관리할 수 있도록 하는 기능을 제공한다.
 
 ![main](https://user-images.githubusercontent.com/62014520/102003456-1808bf00-3d4b-11eb-8cf5-40d6f6916b85.png)
+![login](https://user-images.githubusercontent.com/62014520/102003498-9bc2ab80-3d4b-11eb-90c7-24b3048e790c.png)
 
 
 ## Program Stacks
